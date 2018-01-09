@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="css/college_chuangke.css">
+  <link rel="stylesheet" type="text/css" href="css/college.css">
+  <link rel="stylesheet" type="text/css" href="css/college_rules.css">
+  <script type="text/javascript" >
+  window.onload=function(){
+    var container1=document.getElementById('container1');
+    var list1=document.getElementById('list1');
+    var buttons1=document.getElementById('buttons1').getElementsByTagName("span");//这里漏了后面获取span标签的代码
+    var prev1=document.getElementById('prev1');
+    var next1=document.getElementById('next1');
+    var index1=1;
+    var timer1;
+
+
+    function showButton1(){
+      for(var i=0;i<buttons1.length;i++){
+        if(buttons1[i].className=='on')
+        {
+          buttons1[i].className='';
+          break;
+        }
+      }
+      buttons1[index1-1].className='on';
+
+    }
+
+    // 自动切换
+    function play1(){
+      timer1=setInterval(function(){
+        next1.onclick();
+      },3000);
+
+    }
+    function stop1(){
+      clearInterval(timer1);
+    }
+
+    // 图片滚动函数
+    function animate1(offset){
+      var newleft=parseInt(list1.style.left)+offset;
+      list1.style.left=newleft+'px';
+      if(newleft>-280){
+        list1.style.left=-1400+'px';
+      }
+      else if(newleft<-1400){
+        list1.style.left=-280+'px';
+      }
+    }
+    next1.onclick=function(){
+      if(index1==5){
+        index1=1;
+      }
+      else{
+        index1 +=1;
+      }
+      
+      showButton1();//漏了调用函数
+      animate1(-280);
+    }
+    prev1.onclick=function(){
+      if(index1==1){
+        index1=5;
+      }
+      else{
+        index1 -=1;
+      }
+      showButton1();//漏了调用函数
+      animate1(280);
+    }
+    container1.onmouseover=stop1;
+    container1.onmouseout=play1;
+    play1();
+
+    for(var i=0;i<buttons1.length;i++){
+    buttons1[i].onclick=function(){
+      if(this.className=='on1'){
+        return;
+      }
+      var myindex1=parseInt(this.getAttribute('index'));
+      var offset=-280*(myindex1-index1);
+
+      animate1(offset);
+      index1=myindex1;
+      showButton1();
+      debugger;
+    }
+   }
+  }
+</script>
+<style type="text/css">
+.slide1_img{
+  width:280px;
+    height: 230px;
+    margin: 10px 0px 20px 10px;
+  float: left;
+  overflow: hidden;
+  position: relative;
+}
+#list1{
+  width: 1960px;
+  height: 230px;
+  position: absolute;
+  z-index: 1;
+  transition:left 1.5s;
+  -moz-transition:left 1.5s; /* Firefox 4 */
+  -webkit-transition:left 1.5s; /* Safari and Chrome */
+  -o-transition:left 1.5s; /* Opera */
+}
+#list1 img{
+  float: left;
+}
+#buttons1{
+  position: absolute;
+  height: 10px;
+  width: 100px;
+  z-index: 2;
+  bottom: 20px;
+  left: 200px;
+}
+#buttons1 span{
+  cursor: pointer;
+  float: left;
+  border: 1px solid #fff;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #333;
+  margin-right: 5px;
+}
+#buttons1 .on{
+  background:#ffd306;
+}
+.arrow1{
+  cursor: pointer;
+   display: none;
+  line-height: 39px;
+  text-align: center;
+  font-size: 36px;
+  font-weight: bold;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  z-index: 2;
+  top: 100px;
+  background-color: rgba(0,0,0,.3);
+  color: #fff;
+
+}
+.arrow1:hover{
+  background-color: rgba(0,0,0,.7); 
+}
+#container1:hover .arrow1{
+  display: block;
+}
+#prev1{left:10px;}
+#next1{right:10px;}
+</style>
+  <title></title>
+</head>
+<body>
+  <div class="slide1_img" id="container1">
+    <!-- 图片列表 -->
+        <div id="list1" style="left:-280px;">
+             <img src="images/timg9.png" alt="图片加载失败"/>
+             <img src="images/timg6.png" alt="图片加载失败"/>
+             <img src="images/timg7.png" alt="图片加载失败"/>
+             <img src="images/timg8.png" alt="图片加载失败"/>
+             <img src="images/timg9.png" alt="图片加载失败"/>
+             <img src="images/timg6.png" alt="图片加载失败"/>
+             <img src="images/timg6.png" alt="图片加载失败"/>
+        </div>  
+        <!-- 小圆点 -->
+        <div id="buttons1">
+           <span  index="1" class="on"></span>
+           <span  index="2" ></span>
+           <span  index="3" ></span>
+           <span  index="4" ></span>
+           <span  index="5" ></span>
+        </div>
+        <!-- 箭头 -->
+          <a href="javascript:;" id="prev1" class="arrow1">&lt;</a>
+          <a href="javascript:;" id="next1" class="arrow1">&gt;</a>
+
+
+      </div>
+      <p>啊啊啊</p>
+</body>
+</html>
